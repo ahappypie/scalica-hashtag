@@ -18,9 +18,9 @@ COPY db /init/
 COPY web /opt/
 
 RUN cd /init/ \
-  first_install.sh \
+  ./first_install.sh \
   cd db \
-  install_db.sh \
+  ./install_db.sh \
   cd
 
 RUN source ./env/bin/activate \
