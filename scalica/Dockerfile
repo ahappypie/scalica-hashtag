@@ -4,29 +4,36 @@ MAINTAINER Brian bb1718@nyu.edu
 
 ENV DEBIAN_FRONTEND noninteractive
 
+ARG mysql_pass
+
 RUN apt-get update && apt-get install -y \
   python \
   python-pip \
-  mysql-server \
   libmysqlclient-dev \
   python-dev \
   python-virtualenv
 
-COPY first_install.sh /init/
-COPY requirements.txt /init/
-COPY db /init/
-COPY web /opt/
+RUN apt-get install -y mysql-server \
+  debconf-set-selections <<< "mysql-server mysql-server/root_password password $mysql_pass" \
+  debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $mysql_pass"
 
-RUN cd /init/ \
+RUN mkdir scalica && mkdir scalica/db && mkdir scalica/web
+
+COPY first_install.sh /scalica/
+COPY requirements.txt /scalica/
+COPY db /scalica/db/
+COPY web /scalica/web/
+
+RUN cd /scalica/ \
   ./first_install.sh \
-  cd db \
-  ./install_db.sh \
-  cd
-
-RUN source ./env/bin/activate \
-  cd opt/web/scalica \
+  ./db/install_db.sh <<< $mysql_pass
+  source ./env/bin/activate \
+  cd web/scalica \
   python manage.py makemigrations micro \
-  python manage.py migrate \
+  python manage.py migrate
 
 EXPOSE 8000
-CMD python opt/web/scalica/manage.py runserver
+
+RUN cd /scalica/ \
+  source ./env/bin/activate \
+  python web/scalica/manage.py runserver
