@@ -95,7 +95,7 @@ def post(request):
 
     # add new Hashtag and PostTag entries
     post_text = new_post.text;
-    hashtags = post_text.split("#")
+    hashtags = {tag.strip("#") for tag in post_text.split() if tag.startswith("#")}
     for hashtag in hashtags:
       hashtag = hashtag.split(' ', 1)[0]
       if not (Hashtag.objects.filter(text=hashtag).exists()):
