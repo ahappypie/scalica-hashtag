@@ -42,7 +42,7 @@ class Sentiment(models.Model):
   sentiment_date = models.DateTimeField('sentiment date')
   def __str__(self):
     return hashtag.__str__() + ":" + sentiment_analysis
-  
+
 class Subscribe(models.Model):
   subscriber = models.ForeignKey(settings.AUTH_USER_MODEL)
   hashtag = models.ForeignKey(Hashtag)
@@ -58,6 +58,16 @@ class PostForm(ModelForm):
     widgets = {
       'text': TextInput(attrs={'id' : 'input_post'}),
     }
+
+class HashtagForm(ModelForm):
+    class Meta:
+        model = Hashtag
+        fields = ('text',)
+
+class PostTagForm(ModelForm):
+    class Meta:
+        model = PostTag
+        fields = ('hashtag',)
 
 class FollowingForm(ModelForm):
   class Meta:

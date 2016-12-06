@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Following, Post, SubscribeForm, FollowingForm, PostForm, MyUserCreationForm
+from .models import Following, Post, Hashtag, PostTag, HashtagForm, PostTagForm, SubscribeForm, FollowingForm, PostForm, MyUserCreationForm
 
 
 # Anonymous views
@@ -19,7 +19,7 @@ def index(request):
 def anon_home(request):
   return render(request, 'micro/public.html')
 
-def stream(request, user_id):  
+def stream(request, user_id):
   # See if to present a 'follow' button
   form = None
   if request.user.is_authenticated() and request.user.id != int(user_id):
@@ -36,7 +36,7 @@ def stream(request, user_id):
     posts = paginator.page(page)
   except PageNotAnInteger:
     # If page is not an integer, deliver first page.
-    posts = paginator.page(1) 
+    posts = paginator.page(1)
   except EmptyPage:
     # If page is out of range (e.g. 9999), deliver last page of results.
     posts = paginator.page(paginator.num_pages)
@@ -139,9 +139,24 @@ def subscribe(request):
 #######################
 
 # Add a Hashtag
-#def add_hashtag(request):
-# TODO: Implement adding a hashtag!
+def add_hashtag(request):
+    if request.method == 'POST':
+        form = HashtagForm(request.POST)
+        new_hashtag = form.save(commit=False)
+        new_hashtag.save()
+        return home(request)
+    else:
+        #What does this need to return? Anything?
 
 # Tag a Post
-#def tag_post(request):
-# TODO: Implement tagging a post!
+def tag_post(request):
+    if request.method == 'POST':
+        form = PostTagForm(request.POST)
+        new_postTag = form.save(commit=False)
+        new_postTag.post = #How do I reference the post that needs to be linked here?
+        new_postTag.posttag_date = timezone.now()
+        new_postTag.save()
+        return home(request)
+    else:
+        #Again, do I need to return anything/have an else here?
+        #I assume it'll be possible for a user to get on this url so how do we handle that
