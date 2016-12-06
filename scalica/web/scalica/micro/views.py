@@ -76,10 +76,14 @@ def home(request):
     follower_id=request.user.id)]
   post_list = Post.objects.filter(
       user_id__in=follows).order_by('-pub_date')[0:10]
+  '''List of recent posts with hashtags I am subscribed to'''
+  hashtags = [o.hashtag_id for o in Subscribe.objects.filter(subscriber_id=request.user.id)]
+  hpost_list = Post.objects.filter(user_id__in=hashtags).order_by('-pub_date')[0:10]
   context = {
     'post_list': post_list,
     'my_post' : my_post,
-    'post_form' : PostForm
+    'post_form' : PostForm,
+    'hpost_list':hpost_list
   }
   return render(request, 'micro/home.html', context)
 

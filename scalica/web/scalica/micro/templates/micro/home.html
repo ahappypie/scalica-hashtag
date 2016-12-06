@@ -21,6 +21,7 @@
 <p>
 <div>
 {% if post_list %}
+   Followed User Posts:
   <table id="postlist">
     {% for post in post_list %}
       <tr>
@@ -43,7 +44,36 @@
     {% endfor %}
   </table>
 {% else %}
-  <p>No posts are available.</p>
+  <p>No followed posts are available.</p>
+{% endif %}
+</div>
+
+<div>
+{% if hpost_list %}
+  Followed Hashtag Posts:
+  <table id="hpostlist">
+    {% for post in hpost_list %}
+      <tr>
+        <td>
+          <img src="{% static "micro/images/user_s.png" %}" alt="Generic User"/>
+        </td>
+        <td>
+          {{ post.text }}
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <a href="{% url 'micro:stream' post.user_id %}">
+            {{ post.user.username }}
+          </a>
+          ({{ post.pub_date|naturaltime }})
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>No hashtag followed posts are available.</p>
 {% endif %}
 </div>
 {% endblock %}
