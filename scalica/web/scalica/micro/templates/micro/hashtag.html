@@ -1,10 +1,36 @@
 {% extends "micro/base.html" %}
 {% block content %}
-<!--Used to search hashtags--> 
+<!--Used to search hashtags-->
 <form action="/micro/hashtag/" method="get">
   {% csrf_token %}
   {{ form }}
   <input type="submit" value="Submit" />
 </form>
+
+<div>
+  {% if post_list %}
+    <table id="postlist">
+      {% for post in post_list %}
+        <tr>
+          <td>
+            <img src="{% static "micro/images/user_s.png" %}" alt="Generic User"/>
+          </td>
+          <td>
+            {{post.text}}
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <a href="{% url 'micro:stream' post.user_id %}">{{ post.user.username }}</a>
+            ({{ post.pub_date|naturaltime }})
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+  {% else %}
+    <p>No posts found for that hashtag</p>
+  {% endif %}
+</div>
 
 {% endblock %}
