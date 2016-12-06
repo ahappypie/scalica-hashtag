@@ -2,12 +2,6 @@
 {% load staticfiles %}
 {% block content %}
 <!--Used to search hashtags-->
-<form action="/micro/hashtag/" method="get">
-  {% csrf_token %}
-  {{ form }}
-  <input type="submit" value="Submit" />
-</form>
-
 <div>
   {% if post_list %}
     <table id="postlist">
