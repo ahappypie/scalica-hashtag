@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Following, Post, Hashtag, PostTag, HashtagForm, PostTagForm, SubscribeForm, FollowingForm, PostForm, MyUserCreationForm
+from .models import Following, Post, Hashtag, PostTag, AddHashtagForm, PostTagForm, SubscribeForm, FollowingForm, PostForm, MyUserCreationForm
 
 
 # Anonymous views
@@ -144,14 +144,14 @@ def hashtag(request):
 # Add a Hashtag
 def add_hashtag(request):
     if request.method == 'POST':
-        form = HashtagForm(request.POST)
+        form = AddHashtagForm(request.POST)
         new_hashtag = form.save(commit=False)
         if not (Hashtag.objects.filter(text=new_hashtag.text).exists()):
             new_hashtag.save()
         return home(request)
     else:
-        return
-        #What does this need to return? Anything?
+        form = AddHashtagForm
+    return render(request, 'micro/add_hashtag.html', {'form' : form})
 
 # Tag a Post
 def tag_post(request):

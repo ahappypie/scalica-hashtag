@@ -59,7 +59,7 @@ class PostForm(ModelForm):
       'text': TextInput(attrs={'id' : 'input_post'}),
     }
 
-class HashtagForm(ModelForm):
+class AddHashtagForm(ModelForm):
     class Meta:
         model = Hashtag
         fields = ('text',)
