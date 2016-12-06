@@ -1,0 +1,10 @@
+{% extends "micro/base.html" %}
+{% block content %}
+<!--Used to search hashtags--> 
+<form action="/micro/hashtag/" method="get">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
