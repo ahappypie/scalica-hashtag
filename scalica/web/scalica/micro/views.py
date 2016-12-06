@@ -145,7 +145,7 @@ def hashtag(request):
 # TODO: Implement displaying posts with a given tag
   view_hashtag = "test"
   post_list = PostTag.objects.filter(hashtag=view_hashtag).order_by('-posttag_date')[0:10]
-  return render(request, 'micro/hashtag.html')
+  return render(request, 'micro/hashtag.html', {'post_list':post_list})
 
 
 # External Service APIs
@@ -174,5 +174,3 @@ def tag_post(request):
         return home(request)
     else:
         return
-        #Again, do I need to return anything/have an else here?
-        #I assume it'll be possible for a user to get on this url so how do we handle that
