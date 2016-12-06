@@ -89,6 +89,16 @@ def post(request):
   if request.method == 'POST':
     form = PostForm(request.POST)
     new_post = form.save(commit=False)
+
+    # add new hashtags to db
+    post_text = new_post.text;
+    hashtags = post_text.split("#")
+    for hashtag in hashtags:
+      hashtag = hashtag.split(' ', 1)[0]
+      if not (Hashtag.objects.filter(text=hashtag).exists()):
+    	h = Hashtag(text=hashtag)
+    	h.save()
+
     new_post.user = request.user
     new_post.pub_date = timezone.now()
     new_post.save()
