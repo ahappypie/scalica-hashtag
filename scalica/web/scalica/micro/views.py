@@ -140,10 +140,10 @@ def subscribe(request):
 
 # Allow users to see a list of posts with a hashtag
 @login_required
-def hashtag(request):
+def hashtag(request, view_tag):
 # TODO: Implement selecting a hashtag to view
 # TODO: Implement displaying posts with a given tag
-  view_hashtag = "test"
+  view_hashtag = Hashtag.objects.filter(text=view_tag)[0] 
   post_list = PostTag.objects.filter(hashtag=view_hashtag).order_by('-posttag_date')[0:10]
   return render(request, 'micro/hashtag.html', {'post_list':post_list})
 

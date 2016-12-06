@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^hashtag/add/$', views.add_hashtag, name='add_hashtag'),
 
     # Use this URL to display posts with a given hashtag
-    url(r'^hashtag/(?P<hashtag>[\w\-]+)/$', views.hashtag, name='hashtag_stream'),
+    url(r'^hashtag/(?P<view_tag>[\w\-]+)/$', views.hashtag, name='hashtag_stream'),
 
     # The External Service sends POST data to this URL to tag a post.
     url(r'^post/tag/$', views.tag_post, name='tag_post'),
