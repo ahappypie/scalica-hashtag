@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Following, Post, FollowingForm, PostForm, MyUserCreationForm
+from .models import Following, Post, SubscribeForm, FollowingForm, PostForm, MyUserCreationForm
 
 
 # Anonymous views
@@ -109,3 +109,16 @@ def follow(request):
   else:
     form = FollowingForm
   return render(request, 'micro/follow.html', {'form' : form})
+
+@login_required
+def subscribe(request):
+  if request.method == 'POST':
+    form = SubscribeForm(request.POST)
+    new_subscribe = form.save(commit=False)
+    new_subscribe.subscriber = request.user
+    new_subscribe.subscribe_date = timezone.now()
+    new_subscribe.save()
+    return home(request)
+  else:
+    form = SubscribeForm
+  return render(request, 'micro/subscribe.html', {'form' : form})

@@ -25,19 +25,30 @@ class Following(models.Model):
     return self.follower.username + "->" + self.followee.username
 
 class Hashtag(models.Model):
-  text = models.CharField(max_length=256)
+  text = models.CharField(max_length=256, default="")
+  def __str__(self):
+    return "#" + self.text
 
 class PostTag(models.Model):
   post = models.ForeignKey(Post, on_delete=models.CASCADE)
   hashtag = models.ForeignKey(Hashtag, on_delete=models.CASCADE)
   posttag_date = models.DateTimeField('date')
+  def __str__(self):
+    return post.__str__() + ':' + hashtag.__str__()
 
 class Sentiment(models.Model):
   hashtag = models.ForeignKey(Hashtag, on_delete=models.CASCADE)
-  sentiment_analysis = #what type should this be?
-  sentiment_date = models.DateTimeFild('sentiment date')
+  sentiment_analysis = models.CharField(max_length=256, default="")
+  sentiment_date = models.DateTimeField('sentiment date')
+  def __str__(self):
+    return hashtag.__str__() + ":" + sentiment_analysis
   
-
+class Subscribe(models.Model):
+  subscriber = models.ForeignKey(settings.AUTH_USER_MODEL)
+  hashtag = models.ForeignKey(Hashtag)
+  subscribe_date = models.DateTimeField()
+  def __str__(self):
+    return self.subscriber.username + "->#" + self.hashtag.text
 
 # Model Forms
 class PostForm(ModelForm):
@@ -52,6 +63,11 @@ class FollowingForm(ModelForm):
   class Meta:
     model = Following
     fields = ('followee',)
+
+class SubscribeForm(ModelForm):
+  class Meta:
+    model = Subscribe
+    fields = ('hashtag',)
 
 class MyUserCreationForm(UserCreationForm):
   class Meta(UserCreationForm.Meta):
