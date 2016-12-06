@@ -120,7 +120,7 @@ def follow(request):
     return home(request)
   else:
     form = FollowingForm
-  return render(request, 'micro/follow.html', {'form' : form})
+    return render(request, 'micro/follow.html', {'form' : form})
 
 
 # Scalica Modifications
@@ -145,11 +145,11 @@ def subscribe(request):
 def hashtag(request, view_tag):
 # TODO: Implement selecting a hashtag to view
 # TODO: Implement displaying posts with a given tag
-  view_hashtag = Hashtag.objects.filter(text=view_tag)[0] 
+  view_hashtag = Hashtag.objects.filter(text=view_tag)[0]
   posts = [o.post_id for o in PostTag.objects.filter(hashtag=view_hashtag)]
   post_list = Post.objects.filter(id__in=posts).order_by('-posttag_date')[0:10]
-  print (post_list)
-  return render(request, 'micro/hashtag.html', {'post_list':post_list})
+  #print (post_list)
+  return render(request, 'micro/hashtag.html')
 
 @login_required
 def sentiments(request):
@@ -179,6 +179,7 @@ def tag_post(request):
     if request.method == 'POST':
         form = PostTagForm(request.POST)
         new_postTag = form.save(commit=False)
+        #new_postTag.post = #How do I reference the post that needs to be linked here?
         new_postTag.posttag_date = timezone.now()
         new_postTag.save()
         return home(request)

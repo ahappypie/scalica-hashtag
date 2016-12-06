@@ -118,9 +118,9 @@ def follow(request):
     new_follow.follow_date = timezone.now()
     new_follow.save()
     return home(request)
-else:
+  else:
     form = FollowingForm
-  return render(request, 'micro/follow.html', {'form' : form})
+    return render(request, 'micro/follow.html', {'form' : form})
 
 
 # Scalica Modifications
@@ -148,7 +148,7 @@ def hashtag(request, view_tag):
   view_hashtag = Hashtag.objects.filter(text=view_tag)[0]
   posts = [o.post_id for o in PostTag.objects.filter(hashtag=view_hashtag)]
   post_list = Post.objects.filter(id__in=posts).order_by('-posttag_date')[0:10]
-  #print (post_list)
+  print (post_list)
   return render(request, 'micro/hashtag.html')
 
 @login_required
