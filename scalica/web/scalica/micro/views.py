@@ -1,4 +1,4 @@
-from django.contrib.auth import logout, login, authenticate
+[from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -118,7 +118,7 @@ def follow(request):
     new_follow.follow_date = timezone.now()
     new_follow.save()
     return home(request)
-  else:
+else:
     form = FollowingForm
   return render(request, 'micro/follow.html', {'form' : form})
 
@@ -145,10 +145,10 @@ def subscribe(request):
 def hashtag(request, view_tag):
 # TODO: Implement selecting a hashtag to view
 # TODO: Implement displaying posts with a given tag
-  view_hashtag = Hashtag.objects.filter(text=view_tag)[0] 
+  view_hashtag = Hashtag.objects.filter(text=view_tag)[0]
   posts = [o.post_id for o in PostTag.objects.filter(hashtag=view_hashtag)]
   post_list = Post.objects.filter(id__in=posts).order_by('-posttag_date')[0:10]
-  print (post_list)
+  #print (post_list)
   return render(request, 'micro/hashtag.html')
 
 @login_required
@@ -179,6 +179,7 @@ def tag_post(request):
     if request.method == 'POST':
         form = PostTagForm(request.POST)
         new_postTag = form.save(commit=False)
+        #new_postTag.post = #How do I reference the post that needs to be linked here?
         new_postTag.posttag_date = timezone.now()
         new_postTag.save()
         return home(request)
