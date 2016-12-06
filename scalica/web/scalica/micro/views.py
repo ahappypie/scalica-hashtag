@@ -133,7 +133,9 @@ def subscribe(request):
 def hashtag(request):
 # TODO: Implement selecting a hashtag to view
 # TODO: Implement displaying posts with a given tag
-    post_list = PostTag.objects.filter(hashtag.text = requestedHashtag).post.order_by('-pub_date')[0:10]
+  view_hashtag = "test"
+  post_list = PostTag.objects.filter(hashtag=view_hashtag).order_by('-posttag_date')[0:10]
+  return render(request, 'micro/hashtag.html')
 
 
 # External Service APIs
@@ -144,10 +146,11 @@ def add_hashtag(request):
     if request.method == 'POST':
         form = HashtagForm(request.POST)
         new_hashtag = form.save(commit=False)
-        if !(Hashtag.objects.filter(text=new_hashtag.text).exists()):
+        if not (Hashtag.objects.filter(text=new_hashtag.text).exists()):
             new_hashtag.save()
         return home(request)
     else:
+        return
         #What does this need to return? Anything?
 
 # Tag a Post
@@ -155,10 +158,11 @@ def tag_post(request):
     if request.method == 'POST':
         form = PostTagForm(request.POST)
         new_postTag = form.save(commit=False)
-        new_postTag.post = #How do I reference the post that needs to be linked here?
+        #new_postTag.post = #How do I reference the post that needs to be linked here?
         new_postTag.posttag_date = timezone.now()
         new_postTag.save()
         return home(request)
     else:
+        return
         #Again, do I need to return anything/have an else here?
         #I assume it'll be possible for a user to get on this url so how do we handle that
