@@ -21,6 +21,9 @@ urlpatterns = [
     # The External Service sends POST data to this URL to tag a post.
     url(r'^post/tag/$', views.tag_post, name='tag_post'),
 
+    # View sentiments across hashtags
+    url(r'^sentiments/$', views.sentiments, name='sentiments'),
+
     url(r'^follow/$', views.follow, name='follow'),
     url(r'^register/$', views.register, name='register'),
     url('^', include('django.contrib.auth.urls'))

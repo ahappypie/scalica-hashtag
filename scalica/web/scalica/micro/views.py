@@ -147,6 +147,13 @@ def hashtag(request, view_tag):
   post_list = PostTag.objects.filter(hashtag=view_hashtag).order_by('-posttag_date')[0:10]
   return render(request, 'micro/hashtag.html', {'post_list':post_list})
 
+@login_required
+def sentiments(request):
+	return
+	# TODO: implement showing data from the sentiments table
+	#       the template can hopefully just call the sentiment to string
+	#       for all sentiment entries (should be one for each hashtag)
+
 
 # External Service APIs
 #######################
