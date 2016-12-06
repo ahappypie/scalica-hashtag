@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Following, Post, Hashtag, PostTag, AddHashtagForm, PostTagForm, SubscribeForm, FollowingForm, PostForm, MyUserCreationForm
+from .models import Subscribe, Following, Post, Hashtag, PostTag, AddHashtagForm, PostTagForm, SubscribeForm, FollowingForm, PostForm, MyUserCreationForm
 
 
 # Anonymous views
