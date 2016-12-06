@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Subscribe, Following, Post, Hashtag, PostTag, AddHashtagForm, PostTagForm, SubscribeForm, FollowingForm, PostForm, MyUserCreationForm
+from .models import Subscribe, Following, Post, Hashtag, Sentiment, PostTag, AddHashtagForm, PostTagForm, SubscribeForm, FollowingForm, PostForm, MyUserCreationForm
 
 
 # Anonymous views
@@ -159,7 +159,8 @@ def hashtag(request, view_tag):
 
 @login_required
 def sentiments(request):
-	return
+  sentiment_data = Sentiment.objects.all().filter()
+  return render(request, 'micro/sentiment.html', {'sentiments':sentiment_data})
 	# TODO: implement showing data from the sentiments table
 	#       the template can hopefully just call the sentiment to string
 	#       for all sentiment entries (should be one for each hashtag)

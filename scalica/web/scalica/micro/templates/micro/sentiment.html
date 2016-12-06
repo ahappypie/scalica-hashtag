@@ -1,0 +1,9 @@
+{% extends "micro/base.html" %}
+{% block content %}
+{% for sentiment in sentiments %}
+  <li>
+    {{ sentiment.hashtag }} : {{ sentiment.sentiment_analysis }}
+  </li>
+{% endfor %}
+{# TODO: see complete pagination example in Django doc for more #}
+{% endblock %}
