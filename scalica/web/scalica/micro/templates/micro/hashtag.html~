@@ -20,7 +20,6 @@
           <td></td>
           <td>
             <a href="{% url 'micro:stream' post.user_id %}">{{ post.user.username }}</a>
-            ({{ post.pub_date}})
           </td>
         </tr>
         {% endfor %}
