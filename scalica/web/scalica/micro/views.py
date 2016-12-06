@@ -130,9 +130,10 @@ def subscribe(request):
 
 # Allow users to see a list of posts with a hashtag
 #@login_required
-#def hashtag(request):
+def hashtag(request):
 # TODO: Implement selecting a hashtag to view
 # TODO: Implement displaying posts with a given tag
+    post_list = PostTag.objects.filter(hashtag.text = requestedHashtag).post.order_by('-pub_date')[0:10]
 
 
 # External Service APIs
@@ -143,7 +144,8 @@ def add_hashtag(request):
     if request.method == 'POST':
         form = HashtagForm(request.POST)
         new_hashtag = form.save(commit=False)
-        new_hashtag.save()
+        if !(Hashtag.objects.filter(text=new_hashtag.text).exists()):
+            new_hashtag.save()
         return home(request)
     else:
         #What does this need to return? Anything?
