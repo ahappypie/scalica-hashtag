@@ -110,6 +110,11 @@ def follow(request):
     form = FollowingForm
   return render(request, 'micro/follow.html', {'form' : form})
 
+
+# Scalica Modifications
+#######################
+
+# Allow users to subscribe to a hashtag
 @login_required
 def subscribe(request):
   if request.method == 'POST':
@@ -122,3 +127,21 @@ def subscribe(request):
   else:
     form = SubscribeForm
   return render(request, 'micro/subscribe.html', {'form' : form})
+
+# Allow users to see a list of posts with a hashtag
+#@login_required
+#def hashtag(request):
+# TODO: Implement selecting a hashtag to view
+# TODO: Implement displaying posts with a given tag
+
+
+# External Service APIs
+#######################
+
+# Add a Hashtag
+#def add_hashtag(request):
+# TODO: Implement adding a hashtag!
+
+# Tag a Post
+#def tag_post(request):
+# TODO: Implement tagging a post!
