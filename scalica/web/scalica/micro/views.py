@@ -129,7 +129,7 @@ def subscribe(request):
   return render(request, 'micro/subscribe.html', {'form' : form})
 
 # Allow users to see a list of posts with a hashtag
-#@login_required
+@login_required
 def hashtag(request):
 # TODO: Implement selecting a hashtag to view
 # TODO: Implement displaying posts with a given tag
