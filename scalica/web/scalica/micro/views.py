@@ -147,9 +147,9 @@ def hashtag(request, view_tag):
 # TODO: Implement displaying posts with a given tag
   view_hashtag = Hashtag.objects.filter(text=view_tag)[0]
   posts = [o.post_id for o in PostTag.objects.filter(hashtag=view_hashtag)]
-  post_list = Post.objects.filter(id__in=posts).order_by('-posttag_date')[0:10]
+  post_list = Post.objects.filter(id__in=posts).order_by('-pub_date')[0:10]
   print (post_list)
-  return render(request, 'micro/hashtag.html')
+  return render(request, 'micro/hashtag.html', {'post_list':post_list})
 
 @login_required
 def sentiments(request):

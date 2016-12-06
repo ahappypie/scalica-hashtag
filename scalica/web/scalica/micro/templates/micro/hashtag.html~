@@ -1,4 +1,5 @@
 {% extends "micro/base.html" %}
+{% load staticfiles %}
 {% block content %}
 <!--Used to search hashtags-->
 <form action="/micro/hashtag/" method="get">
@@ -13,6 +14,9 @@
       {% for post in post_list %}
         <tr>
           <td>
+            <img src="{% static "micro/images/user_s.png" %}" alt="Generic User"/>
+          </td>
+          <td>
             {{post.text}}
           </td>
         </tr>
@@ -20,6 +24,7 @@
           <td></td>
           <td>
             <a href="{% url 'micro:stream' post.user_id %}">{{ post.user.username }}</a>
+            ({{ post.pub_date}})
           </td>
         </tr>
         {% endfor %}
