@@ -1,0 +1,16 @@
+syntax = "proto3";
+service PostTag{
+	rpc Post (PostRequest) returns (PostSave){
+
+	}
+}
+
+message PostRequest{
+	string post = 1;
+	string hastag = 1;
+	string posttag_date = 1;
+}
+
+message PostSave{
+	string returnedPost = 1;
+}

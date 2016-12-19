@@ -115,6 +115,23 @@ def post(request):
     form = PostForm
   return render(request, 'micro/post.html', {'form' : form})
 
+"""
+#Basic RPC Implementation, assumes some variables from the above post
+def postTag(self, request, context):
+  post = request.new_post
+  hashtag = request.h
+  posttag_date = request.timezone.now()
+  #Change port when ready
+  channel = grpc.insecure_channel('[::]:8000')
+  stub = views_pb2.PostTagStub(channel)
+  #I believe basic RPC setup is done, now need to make it save the search, make sure to build proto file
+  #Needs the line 'server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))' in main 
+  #attempted to add new hashtag entries but didn't work
+  #Same as the code to filter hashtag in post, then return it to rpc. So call rpc for string then return and save
+
+  return views_db2.PostSave(returnedPost=post)
+"""
+
 @login_required
 def follow(request):
   if request.method == 'POST':
